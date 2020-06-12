@@ -5,7 +5,7 @@ import json
 import requests
 
 WEBHOOK_VERIFY_TOKEN = 'test_faq_token'
-PAGE_ACCESS_TOKEN = 'EAAeeVSYcYQYBAHng9dsVAiRdvy1kKttTvWFkcmoU2fwUr44vnJXVQJfXzuZCL8FAUM9IqZCqlZBgaWMbRw6JQ09xlF9s130Syzt1trfbZCC1jxbM4IHtPqxVXRg6DB11rsDheteFCtLuXHqJWTXqHkz4gMV7QZBRATgucFmF2ywZDZD'
+PAGE_ACCESS_TOKEN = 'EAAIZBJ6RGe1gBADUex3QnyuZAQ9ZBlXMWylQc7FwBu9xw9zNqTCuh1tM7VTKVZBAzQK1EBMOnO9JUrMQ6OOd9iW5Azy0WZCloeFXmYELk2Ws3WtqPIpg0TyPUvWf6Aev6No976MnV72ZAFNSd56xIOeBk7UVK1AYyaZBlxcZCRTnnh2nUQJa0HGt8rPCGullDiEZD'
 
 SEND_API_URL = 'https://graph.facebook.com/v5.0/me/messages?access_token=%s'\
   % PAGE_ACCESS_TOKEN
@@ -22,10 +22,10 @@ def send_message(body):
         for message in entry[channel]:
           sender = message['sender']['id']
           recipient_id =  message['recipient']['id']
-          if 'message' in message: 
+          if 'message' in message:
             webhook_type='message'
           elif 'postback' in message:
-            webhook_type='postback' 
+            webhook_type='postback'
           else:
             return
           if 'text' in message[webhook_type]:
@@ -37,8 +37,8 @@ def send_message(body):
   except Exception as e:
      print("Exception sending")
      print(e)
-      
-      
+
+
 def send_message_to_recipient(message_text, recipient_id, page_id):
   message = {
     'recipient': {
@@ -55,7 +55,7 @@ def send_message_to_recipient(message_text, recipient_id, page_id):
     print(r.json())
     print('==============')
 
-    
+
 @app.route('/')
 @app.route('/index')
 def index():
@@ -78,4 +78,3 @@ def webhook():
     body = json.loads(request.data)
     send_message(body)
     return ("", 205)
-
